@@ -70,7 +70,7 @@ function guicore.gui_action_duplicate_open(player, train)
     
     -- Heading Title Bar
     local gui_heading_area = gui_top.add(tmerge("action_heading_flow"))
-    local gui_heading_label = gui_heading_area.add(tmerge("action_heading_label", { caption = "Duplicate Station" }))
+    local gui_heading_label = gui_heading_area.add(tmerge("action_heading_label", { caption = {"tsh_duplicate"} }))
     local gui_heading_filler = gui_heading_area.add(tmerge("action_heading_filler"))
 
     gui_heading_label.drag_target = gui_top
@@ -136,7 +136,7 @@ function guicore.gui_action_replace_open(player, train)
     
     -- Heading Title Bar
     local gui_heading_area = gui_top.add(tmerge("action_heading_flow"))
-    local gui_heading_label = gui_heading_area.add(tmerge("action_heading_label", { caption = "Replace Station" }))
+    local gui_heading_label = gui_heading_area.add(tmerge("action_heading_label", { caption = {"tsh_replace"} }))
     local gui_heading_filler = gui_heading_area.add(tmerge("action_heading_filler"))
 
     gui_heading_label.drag_target = gui_top
