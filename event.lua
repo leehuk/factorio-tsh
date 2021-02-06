@@ -32,7 +32,7 @@ function tsh_event_gui_click(event)
         return
     end
 
-    if event.element.name == "tsh-action-closebutton" then
+    if event.element.name == "tshb-closebutton" then
         guicore.gui_action_cleanup(player)
         return
     end
@@ -42,8 +42,10 @@ function tsh_event_gui_click(event)
         return
     end
 
-    if event.element.name == "tsh-duplicate" then        
+    if event.element.name == "tshb-duplicate" then        
         guicore.gui_action_duplicate_open(player, entity.train)
+    elseif event.element.name == "tshb-replace" then
+        guicore.gui_action_replace_open(player, entity.train)
     end
 end
 
@@ -59,7 +61,9 @@ function tsh_event_gui_selected(event)
         return
     end
 
-    if event.element.name == "tsh-action-duplicate" then
-        guicore.gui_action_duplicate_click(player, entity.train, event.element.selected_index)
+    if event.element.name == "tsha-duplicate" then
+        guicore.gui_action_duplicate_click(player, entity.train, event.element)
+    elseif event.element.name == "tsha-replacesource" or event.element.name == "tsha-replacetarget" then
+        guicore.gui_action_replace_click(player, entity.train, event.element)
     end
 end

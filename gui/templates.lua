@@ -1,9 +1,20 @@
 local guitemplates = {}
 
 guitemplates.duplicate_button = {
-    name = "tsh-duplicate",
+    name = "tshb-duplicate",
     type = "sprite-button",
     sprite = "tsh_button_duplicate",
+    style = "tsh_button",
+    anchor = {
+        gui      = defines.relative_gui_type.train_gui,
+        position = defines.relative_gui_position.right,
+    }
+}
+
+guitemplates.replace_button = {
+    name = "tshb-replace",
+    type = "sprite-button",
+    sprite = "tsh_button_replace",
     style = "tsh_button",
     anchor = {
         gui      = defines.relative_gui_type.train_gui,
@@ -33,7 +44,7 @@ guitemplates.action_heading_filler = {
     style = "tsh_heading_filler"
 }
 guitemplates.action_close_button = {
-    name = "tsh-action-closebutton",
+    name = "tshb-closebutton",
     type = "sprite-button",
     sprite = "tsh_button_close",
     style = "frame_action_button"
