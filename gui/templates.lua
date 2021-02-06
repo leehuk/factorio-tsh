@@ -12,7 +12,6 @@ guitemplates.duplicate_button = {
 }
 
 guitemplates.action_frame = {
-    name = "tsh-action",
     type = "frame",
     direction = "vertical",
     style = "frame"

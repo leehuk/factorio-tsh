@@ -19,6 +19,17 @@ function guicore.gui_init()
     end
 end
 
+local function tmerge(template, params)
+    params = params or {}
+
+    local result = guicore.templates[template]
+    for k, v in pairs(params) do
+        result[k] = v
+    end
+
+    return result
+end
+
 function guicore.gui_action_isopen(player)
     if player.valid and player.gui and player.gui.screen and player.gui.screen.children then
         for _, child in pairs(player.gui.screen.children) do
@@ -48,25 +59,21 @@ function guicore.gui_action_duplicate_open(player, train)
     end
 
     -- Top Frame
-    local gui_top = player.gui.screen.add(guicore.templates.action_frame)
+    local gui_top = player.gui.screen.add(tmerge("action_frame"))
     gui_top.force_auto_center()
     
     -- Heading Title Bar
-    local gui_heading_area = gui_top.add(guicore.templates.action_heading_flow)
-    local gui_heading_label = gui_heading_area.add(guicore.templates.action_heading_label)
-    local gui_heading_filler = gui_heading_area.add(guicore.templates.action_heading_filler)
+    local gui_heading_area = gui_top.add(tmerge("action_heading_flow"))
+    local gui_heading_label = gui_heading_area.add(tmerge("action_heading_label", { caption = "Duplicate Station" }))
+    local gui_heading_filler = gui_heading_area.add(tmerge("action_heading_filler"))
 
-    gui_heading_label.caption = "Duplicate Station"
     gui_heading_label.drag_target = gui_top
     gui_heading_filler.drag_target = gui_top
     
-    gui_heading_area.add(guicore.templates.action_close_button)
+    gui_heading_area.add(tmerge("action_close_button"))
 
     --local gui_search = guicore.templates.action_search_frame
-
-    local gui_stationlist_def = guicore.templates.action_list_pane
-    gui_stationlist_def.name = "tsh-action-duplicate"
-    local gui_stationlist = gui_top.add(gui_stationlist_def)
+    local gui_stationlist = gui_top.add(tmerge("action_list_pane", { name = "tsh-action" }))
 
     if train.schedule and train.schedule.records and #train.schedule.records > 0 then
         for i, record in ipairs(train.schedule.records) do
