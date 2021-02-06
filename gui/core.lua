@@ -4,19 +4,23 @@ local util = require("util")
 
 function guicore.gui_init()
     for i, player in pairs(game.players) do
-        if player.valid and player.gui and player.gui.relative and player.gui.relative.children then
-            for _, child in pairs(player.gui.relative.children) do
-                if child.name == "tshb-duplicate" or child.name == "tshb-replace" then
-                    child.destroy()
-                end
+        guicore.gui_init_player(player)
+    end
+end
+
+function guicore.gui_init_player(player)
+    if player.valid and player.gui and player.gui.relative and player.gui.relative.children then
+        for _, child in pairs(player.gui.relative.children) do
+            if child.name == "tshb-duplicate" or child.name == "tshb-replace" then
+                child.destroy()
             end
         end
-
-        guicore.gui_action_cleanup(player)
-
-        player.gui.relative.add(guicore.templates.duplicate_button)
-        player.gui.relative.add(guicore.templates.replace_button)
     end
+
+    guicore.gui_action_cleanup(player)
+
+    player.gui.relative.add(guicore.templates.duplicate_button)
+    player.gui.relative.add(guicore.templates.replace_button)
 end
 
 local function tmerge(template, params)

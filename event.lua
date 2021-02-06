@@ -67,3 +67,9 @@ function tsh_event_gui_selected(event)
         guicore.gui_action_replace_click(player, entity.train, event.element)
     end
 end
+
+function tsh_event_player_created(event)
+    local player = game.players[event.player_index]
+
+    guicore.gui_init_player(player)
+end
