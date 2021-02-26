@@ -68,6 +68,19 @@ function tsh_event_gui_selected(event)
     end
 end
 
+function tsh_event_modsetting_changed(event)
+    if not event.player_index or event.setting ~= "tsh-button-location" then        
+        return
+    end
+
+    local player = game.players[event.player_index]
+    if not player or not player.valid then
+        return
+    end
+
+    guicore.gui_init_player(player)
+end
+
 function tsh_event_player_created(event)
     local player = game.players[event.player_index]
 

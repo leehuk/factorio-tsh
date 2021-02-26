@@ -2,6 +2,26 @@ local guicore = {}
 guicore.templates = require("gui/templates")
 local util = require("util")
 
+local function tmerger(template, params)
+    local player = game.players[1]
+    for k, v in pairs(params) do
+        if type(v) == "table" and v[1] == nil then
+            template[k] = tmerger(template[k], v)
+        else
+            template[k] = v
+        end
+    end
+
+    return template
+end
+
+local function tmerge(template, params)
+    params = params or {}
+
+    local result = guicore.templates[template]
+    return tmerger(result, params)
+end
+
 function guicore.gui_init()
     for i, player in pairs(game.players) do
         guicore.gui_init_player(player)
@@ -9,7 +29,7 @@ function guicore.gui_init()
 end
 
 function guicore.gui_init_player(player)
-    if player.valid and player.gui and player.gui.relative and player.gui.relative.children then
+    if player and player.valid and player.gui and player.gui.relative and player.gui.relative.children then
         for _, child in pairs(player.gui.relative.children) do
             if child.name == "tshb-duplicate" or child.name == "tshb-replace" then
                 child.destroy()
@@ -17,22 +37,18 @@ function guicore.gui_init_player(player)
         end
     end
 
-    guicore.gui_action_cleanup(player)
-
-    player.gui.relative.add(guicore.templates.duplicate_button)
-    player.gui.relative.add(guicore.templates.replace_button)
-end
-
-local function tmerge(template, params)
-    params = params or {}
-
-    local result = guicore.templates[template]
-    for k, v in pairs(params) do
-        result[k] = v
+    local direction = defines.relative_gui_position.right
+    local config = settings.get_player_settings(player)
+    if config['tsh-button-location'].value == 'left' then
+        direction = defines.relative_gui_position.left
     end
 
-    return result
+    guicore.gui_action_cleanup(player)
+
+    player.gui.relative.add(tmerge("duplicate_button", { anchor = { position = direction } }))
+    player.gui.relative.add(tmerge("replace_button", { anchor = { position = direction } }))
 end
+
 
 function guicore.gui_action_isopen(player, search)
     if player.valid and player.gui and player.gui.screen and player.gui.screen.children then
