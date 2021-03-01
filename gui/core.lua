@@ -39,7 +39,7 @@ function guicore.gui_init_player(player)
 
     local direction = defines.relative_gui_position.right
     local config = settings.get_player_settings(player)
-    if config['tsh-button-location'].value == 'left' then
+    if config['tsh-button-location'] and config['tsh-button-location'].value == 'left' then
         direction = defines.relative_gui_position.left
     end
 
