@@ -136,7 +136,33 @@ local function gui_stationlist_collate(player)
     end
 
     table.sort(stations)
+
+    global.stationmapping[player.index] = {}
+    global.stationmapping[player.index]['full'] = stations
+
     return stations
+end
+
+function guicore.gui_action_filter(player, stationlist, search)
+    if not player or not player.valid or not stationlist or not stationlist.valid then
+        return
+    end
+
+    if search ~= nil and search ~= "" then
+        global.stationmapping[player.index]['filtered'] = {}
+        for _, station in pairs(global.stationmapping[player.index]['full']) do
+            if station:lower():find(search, 1, true) ~= nil then
+                table.insert(global.stationmapping[player.index]['filtered'], station)
+            end
+        end
+    else
+        global.stationmapping[player.index]['filtered'] = global.stationmapping[player.index]['full']
+    end
+
+    stationlist.clear_items()
+    for _, station in pairs(global.stationmapping[player.index]['filtered']) do
+        stationlist.add_item(station)
+    end
 end
 
 function guicore.gui_action_replace_open(player, train)
@@ -169,11 +195,12 @@ function guicore.gui_action_replace_open(player, train)
         end
     end
 
-    local gui_stationlist_t = gui_top.add(tmerge("action_list_pane", { name = "tsha-replacetarget" }))
+    local gui_search = gui_top.add(tmerge("action_search"))
+    gui_search.focus()
 
-    for _, station in pairs(gui_stationlist_collate(player)) do
-        gui_stationlist_t.add_item(station)
-    end
+    local gui_stationlist_t = gui_top.add(tmerge("action_list_pane", { name = "tsha-replacetarget" }))
+    gui_stationlist_collate(player)
+    guicore.gui_action_filter(player, gui_stationlist_t)
 end
 
 function guicore.gui_action_replace_click(player, train, element)

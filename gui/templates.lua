@@ -49,12 +49,6 @@ guitemplates.action_close_button = {
     sprite = "tsh_button_close",
     style = "frame_action_button"
 }
-guitemplates.action_search_frame = {
-    name = "tsh-action-search",
-    type = "frame",
-    direction = "horizontal",
-    style = "subheader_frame"
-}
 guitemplates.action_list_pane = {
     type = "list-box",
     style = "tsh_list_pane",
@@ -62,6 +56,12 @@ guitemplates.action_list_pane = {
 guitemplates.action_listitem = {
     type = "button",
     style = "list_box_item"
+}
+guitemplates.action_search = {
+    name = "tsha-search",
+    type = "textfield",
+    style = "tsh_search",
+    visible = true
 }
 
 return guitemplates

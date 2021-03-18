@@ -21,3 +21,10 @@ data.raw["gui-style"].default["tsh_list_pane"] = {
     height = 200,
     width = 350
 }   
+
+data.raw["gui-style"].default["tsh_search"] = {
+    type = "textbox_style",
+    parent = "textbox",
+    width = 350,
+    bottom_margin = 4
+}

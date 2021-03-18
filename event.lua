@@ -68,6 +68,20 @@ function tsh_event_gui_selected(event)
     end
 end
 
+function tsh_event_gui_text(event)
+    local player = game.players[event.player_index]
+
+    if not player or not player.valid or not event.element or not event.element.valid then
+        return
+    end
+
+    for _, child in pairs(event.element.parent.children) do
+        if child.name == "tsha-replacetarget" then
+            guicore.gui_action_filter(player, child, event.text)
+        end
+    end
+end
+
 function tsh_event_modsetting_changed(event)
     if not event.player_index or event.setting ~= "tsh-button-location" then        
         return
